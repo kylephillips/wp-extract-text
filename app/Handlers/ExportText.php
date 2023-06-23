@@ -39,6 +39,7 @@ class ExportText
 			return;
 		endif;
 		$post_types = get_post_types(['public' => true]);
+		$post_types['page'] = 'page';
 		foreach ( $post_types as $type ) :
 			$this->getPosts($type);
 		endforeach;
@@ -58,8 +59,8 @@ class ExportText
 	private function formatExport()
 	{
 		foreach ( $this->posts as $post ) :
-			$this->text .= "\r" . $post->post_title;
-			$this->text .= "\r\r" . apply_filters('extract_text_post', $this->cleaner->clean($post->post_content), $post);
+			$this->text .= "\r" . $post->post_title . "\r\r";
+			$this->text .= apply_filters('extract_text_post', $this->cleaner->clean($post->post_content), $post) . "\r";
 		endforeach;
 	}
 
